@@ -326,6 +326,7 @@ Check the schemes below.
 ##### Example #1
 
 <img width="1048" alt="Снимок экрана 2023-04-06 003133" src="https://user-images.githubusercontent.com/52240221/230216458-a51587a3-70f8-4955-8a41-2caaca9d3b58.png">
+<img width="1346" alt="image" src="https://user-images.githubusercontent.com/52240221/231485935-a22095a4-a281-47c5-9047-d25948bdf241.png">
 
 ##### Example #2
 
