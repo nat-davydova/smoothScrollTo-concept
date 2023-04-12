@@ -313,6 +313,7 @@ function smoothScrollTo({
 
 <img width="832" alt="Снимок экрана 2023-04-06 001122" src="https://user-images.githubusercontent.com/52240221/230212586-7bb7369f-45f1-49b5-9fa6-9266729970a5.png">
 <img width="986" alt="image" src="https://user-images.githubusercontent.com/52240221/231481051-7d532ddd-29f5-445b-aa26-5e939816fdcb.png">
+<img width="1140" alt="image" src="https://user-images.githubusercontent.com/52240221/231481714-8b7c2a80-e045-4009-996f-4d260550e494.png">
 
 #### Calc absolute target element Y-coordinate
 
