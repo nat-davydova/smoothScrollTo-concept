@@ -18,6 +18,7 @@
   * [Get the absolute animation progress](#get-the-absolute-animation-progress)
   * [Get the animation progress normalization by Bezier Curve](#get-the-animation-progress-normalization-by-bezier-curve)
   * [Calculate scroll length per frame](#calculate-scroll-length-per-frame)
+  * [Calculate new position Y-coordinate](#calculate-new-position-y-coordinate)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -531,24 +532,14 @@ const currentScrollLength = (targetPositionY - scrollStartPositionY) * normalize
 
 <img width="1201" alt="image" src="https://user-images.githubusercontent.com/52240221/231743105-942e395b-67f8-4b57-9e56-7e2576c4e60a.png">
 
-### New position Y-coordinate
+### Calculate new position Y-coordinate
 
 Alright, the purpose of the `animateSingleScrollFrame()` function is to actually scroll. We need to know the actual Y-coordinate of the point we're scrolling to, and since we've done all the preliminary calculations, we're ready to calculate the stopping scroll point for the current frame:
 
 ```js
-function animateSingleScrollFrame({
-    startScrollTime,
-    scrollDuration,
-    scrollStartPositionY,
-    targetPositionY,
-  }) {
-  // ... previous stuff
-  
-  const currentScrollLength =
-    (targetPositionY - scrollStartPositionY) * normalizedAnimationProgress;
-    
-  const newPositionY = scrollStartPositionY + currentScrollLength;
-}
+const currentScrollLength = (targetPositionY - scrollStartPositionY) * normalizedAnimationProgress;
+
+const newPositionY = scrollStartPositionY + currentScrollLength;
 ```
 
 #### Example #1
@@ -557,7 +548,7 @@ function animateSingleScrollFrame({
 #### Example #2
 <img width="1272" alt="image" src="https://user-images.githubusercontent.com/52240221/231743608-d3a185eb-998e-437f-b124-c211e3d05f2d.png">
 
-### Let's Scroll!
+### Let's put it together and scroll!
 
 Now it's time to scroll the page! Although it's not smooth at the moment, it works!
 
@@ -568,7 +559,15 @@ function animateSingleScrollFrame({
     scrollStartPositionY,
     targetPositionY,
   }) {
-  // ... previous stuff
+  const currentTime = performance.now() + 100;
+ 
+  const elapsedTime = currentTime - startScrollTime;
+ 
+  const absoluteAnimationProgress = Math.min(elapsedTime / scrollDuration, 1);
+  
+  const normalizedAnimationProgress = normalizeAnimationProgressByBezierCurve(
+    absoluteAnimationProgress
+  );
     
   const newPositionY = scrollStartPositionY + currentScrollLength;
   
