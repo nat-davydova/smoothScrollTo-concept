@@ -9,6 +9,7 @@
 * [Function `getScrollTargetElem()` get target to which it needs to scroll](#function-getscrolltargetelem-get-target-to-which-it-needs-to-scroll-table-of-contents)
   * [Obtain and validate link `href` value](#obtain-and-validate-link-href-value)
 * [Function `smoothScrollTo()` and it's basic variables](#function-smoothscrollto-and-its-basic-variables-table-of-contents)
+  * [Get the scroll start position](#get-the-scroll-start-position)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -275,9 +276,11 @@ function smoothScrollTo({
 }
 ```
 
-### Get actual user Y-coordinate
+### Get the scroll start position
 
-A crucial part of each custom scrolling is detecting the starting point. We can perform further calculations based on the coordinates of our current position on the page. In our case (vertical scrolling), we're interested in Y-coordinates only. The starting point is easy to obtain with `window.scrollY`:
+A crucial part of each custom scrolling is detecting the starting point. We can perform further calculations based on the coordinates of our current position on the page. In our case (vertical scrolling), we're interested in Y-coordinates only. 
+
+The starting point is easy to obtain with `window.scrollY`. Its returned value is a double-precision floating-point value. In our example, such high precision for pixels is not needed. Therefore, to simplify the final value, we will round it using the `Math.round()` function.
 
 ```js
 function smoothScrollTo({
