@@ -23,6 +23,8 @@
   * [Use `requestAnimationFrame()` to start the browser animation](#use-requestanimationframe-to-start-the-browser-animation)
   * [️⚠️ A Pitfall with `requestAnimationFrame()` and recursion](#a-pitfall-with-requestanimationframe-and-recursion)
   * [Finish creating animation with recursive `requestAnimationFrame()`](#finish-creating-animation-with-recursive-requestanimationframe)
+* [The last thing: a callback on an animation end](#the-last-thing-a-callback-on-an-animation-end-table-of-contents)   
+* [A final word](#a-final-word-table-of-contents)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -695,11 +697,13 @@ Did you notice how we replaced the mock value with the current frame time? Now w
 
 ## 🎉 It animates now!
 
+My congratulations to you!
+
 [Untitled_ Apr 8, 2023 2_34 PM.webm](https://user-images.githubusercontent.com/52240221/230718929-876dd79e-8d6d-446b-80ee-bddb1ef22870.webm)
 
-## The last thing: a callback on animation end
+## The last thing: a callback on an animation end ([Table of Contents](#contents))
 
-It's not a critical feature, just a nice small cherry on the cake. Let's add a callback that will be executed when the animation is fully completed.
+It's not a crucial feature, just a nice small cherry on the cake. Let's add a callback that will be executed when the animation is fully completed.
 
 We will pass it in the `smoothScrollTo()` function, as it is our entry point. Let's pass a small `console.log()` callback:
 
@@ -734,7 +738,10 @@ function smoothScrollTo({
     onAnimationEnd
   };
   
-  // ... next stuff
+  requestAnimationFrame((currentTime) =>
+    animateSingleScrollFrame(animationFrameSettings, currentTime)
+  );
+}
 ```
 
 ```js
@@ -756,7 +763,7 @@ function animateSingleScrollFrame(
     scrollDuration,
     scrollStartPositionY,
     targetPositionY,
-    // add it as a new setting to the settings object
+    // don't forget to save the on animation end callback link
     onAnimationEnd,
   };
 
@@ -764,7 +771,8 @@ function animateSingleScrollFrame(
     requestAnimationFrame((currentTime) =>
       animateSingleScrollFrame(animationFrameSettings, currentTime)
     );
-  // check if a callback is passed to the function
+  // check if a on animation end callback is passed  
+  // to the `animateSingleScrollFrame` function
   } else if (onAnimationEnd) {
     onAnimationEnd();
   }
@@ -776,5 +784,7 @@ function animateSingleScrollFrame(
 ## A final word
 
 We've built a fully complete Smooth Scroll concept. You can use it in your projects as is, or extend it with additional easing animations, end-of-animation callbacks, or other features! Feel free to use the code however you like!
+
+Let me remind you that you can watch [Full Demo on Codepen](https://codepen.io/nat-davydova/full/QWZwOdb/5db409195086b5b1631055fbcb6c94e5)
 
 I would be really glad to receive your feedback!
