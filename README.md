@@ -311,18 +311,9 @@ We need to grab the target element's Y-coordinate relative to the user's viewpor
 <img width="459" alt="getBoundingClientRect schema" src="https://user-images.githubusercontent.com/52240221/230092703-4b91ad4f-2a24-4a99-bcca-3fa4c8490d38.png">
 
 ```js
-function smoothScrollTo({
-  scrollTargetElem,
-  scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME
-}) {
-  // ... previous stuff
-  
-  const scrollStartPositionY = Math.round(window.scrollY);
-  
-  const targetPositionYRelativeToViewport = Math.round(
+ const targetPositionYRelativeToViewport = Math.round(
     scrollTargetElem.getBoundingClientRect().top
   );
-}
 ```
 
 <img width="1140" alt="image" src="https://user-images.githubusercontent.com/52240221/231481714-8b7c2a80-e045-4009-996f-4d260550e494.png">
@@ -356,7 +347,9 @@ function smoothScrollTo({
   scrollTargetElem,
   scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME
 }) {
-  // ... previous stuff
+  if (!scrollTargetElem) {
+    return;
+  }
   
   const scrollStartPositionY = Math.round(window.scrollY);
   
