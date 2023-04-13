@@ -147,34 +147,19 @@ navigation?.addEventListener("click", (e) => {
 
   const currentTarget = e.target;
 
+  // We can't truly guarantee that JavaScript will 100% find this element in the DOM. 
+  // That's why currentLink can be either Element or null.
   const currentLink = currentTarget.closest(`.${DOM.navLink}`);
 
   const scrollTargetElem = getScrollTargetElem(currentLink);
 });
 
-function getScrollTargetElem(clickedLinkElem) {}
-```
-
-### Get the clicked link
-
-We captured a link we've clicked here:
-
-```js
-const currentLink = currentTarget.closest(`.${DOM.navLink}`);
-```
-
-We can't truly guarantee that JavaScript will 100% find this element in the DOM. That's why `currentLink` can be either `Element` or `null`.
-
-So, we can pass it as an argument when `getScrollTargetElem` is called inside the event handler. Now, let's set it as a function parameter:
-
-```js
 function getScrollTargetElem(clickedLinkElem) {
-  
-  if (!clickedLinkElem) {
-    return null;
-  }
-  
-  ...
+   // Notice that after the following unsuccessful checks, we will return null as a signal that 
+   // the getScrollTargetElem() function has failed to find the target to which the scroll should be performed
+   if (!clickedLinkElem) {
+      return null;
+    }
 }
 ```
 
@@ -237,21 +222,6 @@ function getScrollTargetElem(clickedLinkElem) {
 }
 ```
 
-### Get actual scrollTo target
-
-Let's get the element (or `null`) in the event handler:
-
-```js
-navigation?.addEventListener("click", (e) => {
-  // ... previous stuff
-
-  const currentLink = currentTarget.closest(`.${DOM.navLink}`);
-
-  const scrollTargetElem = getScrollTargetElem(currentLink);
-
-  smoothScrollTo(scrollTargetElem);
-});
-```
 ## smoothScrollTo() function and it's basic variables
 
 The actual function that performs all the magic is a function that smoothly scrolls to the target. We call it in the event handler after target definition, as it should know the point to which it should actually scroll
