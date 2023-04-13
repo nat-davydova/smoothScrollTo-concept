@@ -284,7 +284,7 @@ function smoothScrollTo({
   const scrollStartPositionY = Math.round(window.scrollY);
 }
 ```
-[Untitled_ Apr 5, 2023 4_03 PM.webm](https://user-images.githubusercontent.com/52240221/230088691-7c632ad0-5dac-484b-8308-bb43ec1a0a1b.webm)
+[Untitled_ Apr 13, 2023 2_27 PM.webm](https://user-images.githubusercontent.com/52240221/231745174-a0ac1350-356c-4d52-aa19-6b69faee527a.webm)
 
 ### Get Y-coordinate of target element
 
