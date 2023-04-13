@@ -1,12 +1,26 @@
 # smoothScrollTo() Function Concept
 
-## What is it
+## Contents
+* [Main idea](#main-idea-table-of-contents)
+* [Demo](#demo-table-of-contents) 
+* [Prerequisites](#prerequisites-table-of-contents)
+
+## Main idea ([Table of Contents](#contents))
 
 I'm implementing my own vanilla JS alternative to the browser's `scroll-behavior: smooth` feature here. It's useful for cases when you need to combine this functionality with complex scroll JS behavior.
 
-## Demo, HTML & CSS
+## Demo ([Table of Contents](#contents))
 
 You could check a [Full Demo on Codepen](https://codepen.io/nat-davydova/full/QWZwOdb/5db409195086b5b1631055fbcb6c94e5)
+
+## Prerequisites ([Table of Contents](#contents))
+
+For a good understanding of the article, the following are necessary:
+* basic layout knowledge: lists, positioning, basics of the Flex model;
+* basic JavaScript knowledge: searching DOM elements, events basics, function declarations, arrow functions, callbacks;
+* your good mood 😊
+
+## HTML & CSS
 
 ### HTML
 
