@@ -14,7 +14,8 @@
   * [Get the scroll start timestamp](#get-the-scroll-start-timestamp)
 * [Function `animateSingleScrollFrame()` gives the progress of the animation](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents)
   * [Set the current time mock](#set-the-current-time-mock)
-
+  * [Calc the elapsed time](#calc-the-elapsed-time)
+ 
 ## Main idea ([Table of Contents](#contents))
 
 I'm implementing my own vanilla JS alternative to the browser's `scroll-behavior: smooth` feature here. It's useful for cases when you need to combine this functionality with complex scroll JS behavior.
@@ -439,17 +440,13 @@ Technically, we would obtain a `currentTime` timestamp from `requestAnimationFra
 const currentTime = performance.now() + 100;
 ```
 
-### Elapsed Time
+### Calc the elapsed time
 
 The elapsed time will be used to calculate the animation progress. When we implement `requestAnimationFrame()`, `currentTime` (and therefore, `elapsedTime`) will be updated on each Event Loop tick.
 
 ```js
-function animateSingleScrollFrame({startScrollTime, scrollDuration }) {
-  // ... previous stuff
-  
-  // It's currently equal to 100ms due to the mock value
-  const elapsedTime = currentTime - startScrollTime;
-}
+// it's 100ms now because of the mock, but will be recalculate later
+const elapsedTime = currentTime - startScrollTime;
 ```
 
 ### Animation Progress
