@@ -591,7 +591,7 @@ function animateSingleScrollFrame({
 
 In the video, you can see the difference in scroll length based on the dimension between `scrollStartPositionY` and `targetPositionY`:
 
-[Untitled_ Apr 6, 2023 8_58 PM.webm](https://user-images.githubusercontent.com/52240221/230458661-7885e840-09f2-49c5-8182-4ea6ee071e65.webm)
+[Untitled_ Apr 13, 2023 2_35 PM.webm](https://user-images.githubusercontent.com/52240221/231746886-18d64d3b-a626-4c2e-bc9a-452ae82b0d09.webm)
 
 ## Separate Frames -> Animation
 
