@@ -246,12 +246,15 @@ The crucial thing we need to know is how long our animation should last. In our 
 const DEFAULT_SCROLL_ANIMATION_TIME = 500;
 
 navigation?.addEventListener("click", (e) => {
-  // ... previous stuff
+  e.preventDefault();
+
+  const currentTarget = e.target;
+  
+  const currentLink = currentTarget.closest(`.${DOM.navLink}`);
 
   // getScrollTargetElem() returns either an Element or null, 
   // and we handle what to do in both cases within the smoothScrollTo() function
   const scrollTargetElem = getScrollTargetElem(currentLink);
-
 
   // the user can set any time in milliseconds here
   // I've also packed the arguments into objects for more convenient handling
