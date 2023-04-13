@@ -10,6 +10,7 @@
   * [Obtain and validate link `href` value](#obtain-and-validate-link-href-value)
 * [Function `smoothScrollTo()` and it's basic variables](#function-smoothscrollto-and-its-basic-variables-table-of-contents)
   * [Get the scroll start position](#get-the-scroll-start-position)
+  * [Get the scroll end position](#get-the-scroll-end-position)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -296,9 +297,12 @@ function smoothScrollTo({
 ```
 [Untitled_ Apr 13, 2023 2_27 PM.webm](https://user-images.githubusercontent.com/52240221/231745174-a0ac1350-356c-4d52-aa19-6b69faee527a.webm)
 
-### Get Y-coordinate of target element
+### Get the scroll end position
 
-We know the starting point of scrolling, and we need one more point - the Y-coordinate of where to scroll. It's a bit more tricky: we have no methods to directly grab the absolute coordinate of the top-left corner of the target element. However, it's still possible, but we need two steps to obtain it.
+We know the starting point of scrolling, and we need one more point - the Y-coordinate of where to scroll. It's a bit more tricky: we have no methods to directly grab the absolute document coordinate of the top-left corner of the target element. However, it's still possible, but we need two steps to obtain it:
+
+* get the target element Y-coordinate relative to viewport
+* calculate document absolute Y-coordinate for the target element
 
 #### Get the target element Y-coordinate relative to viewport
 
