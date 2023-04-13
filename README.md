@@ -536,11 +536,11 @@ function animateSingleScrollFrame({
 
 #### Example #1
 
-<img width="1051" alt="image" src="https://user-images.githubusercontent.com/52240221/230448561-b66235f5-a586-4e27-9ad6-5db537f29234.png">
+<img width="1099" alt="image" src="https://user-images.githubusercontent.com/52240221/231742994-553bdd15-b4a4-4b77-bd1b-21400a554ccc.png">
 
 #### Example #2
 
-<img width="861" alt="image" src="https://user-images.githubusercontent.com/52240221/230451269-5f62aa5e-3121-4dc5-bfe2-51f4b32a91a7.png">
+<img width="1201" alt="image" src="https://user-images.githubusercontent.com/52240221/231743105-942e395b-67f8-4b57-9e56-7e2576c4e60a.png">
 
 ### New position Y-coordinate
 
@@ -563,10 +563,10 @@ function animateSingleScrollFrame({
 ```
 
 #### Example #1
-<img width="1044" alt="image" src="https://user-images.githubusercontent.com/52240221/230455012-1bc89900-9149-4bcb-998f-f725ed568aa6.png">
+<img width="1236" alt="image" src="https://user-images.githubusercontent.com/52240221/231743505-4cab3f9e-c27c-4b80-b3e3-dc4e54165f4b.png">
 
 #### Example #2
-<img width="1049" alt="image" src="https://user-images.githubusercontent.com/52240221/230455407-4fa18d89-2cc8-4939-8c7c-ad644236cafe.png">
+<img width="1272" alt="image" src="https://user-images.githubusercontent.com/52240221/231743608-d3a185eb-998e-437f-b124-c211e3d05f2d.png">
 
 ### Let's Scroll!
 
