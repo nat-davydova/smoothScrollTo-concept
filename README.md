@@ -4,6 +4,7 @@
 * [Main idea](#main-idea-table-of-contents)
 * [Demo](#demo-table-of-contents) 
 * [Prerequisites](#prerequisites-table-of-contents)
+* [Basic layout](#basic-layout-table-of-contents)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -20,11 +21,13 @@ For a good understanding of the article, the following are necessary:
 * basic JavaScript knowledge: searching DOM elements, events basics, function declarations, arrow functions, callbacks;
 * your good mood 😊
 
-## HTML & CSS
+## Basic layout ([Table of Contents](#contents))
 
 ### HTML
 
-The HTML structure here is simple: just a navigation with 3 links and 3 sections corresponding to them:
+The HTML structure here is simple: just a navigation with 3 links and 3 sections corresponding to them.
+
+Yes, the navigation already works through the combination of `href` and `id` attributes. However, the transition is immediate. Our task is to make it smooth
 
 ```html
 <body>
@@ -41,7 +44,9 @@ The HTML structure here is simple: just a navigation with 3 links and 3 sections
 
 ### CSS
 
-The styles are simple too. I've made the navigation fixed and added some decorative section styles to visually separate them:
+The styles are simple as well. I've made the navigation fixed and added some decorative section styles to visually separate them by using alternating background colors
+<details>
+<summary>CSS code</summary>
 
 ```css
 * {
@@ -88,6 +93,7 @@ section:nth-of-type(2n) {
     background-color: gray;
 }
 ```
+</details>
 
 ## Event Listener
 
