@@ -13,6 +13,7 @@
   * [Get the scroll end position](#get-the-scroll-end-position)
   * [Get the scroll start timestamp](#get-the-scroll-start-timestamp)
 * [Function `animateSingleScrollFrame()` gives the progress of the animation](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents)
+  * [Set the current time mock](#set-the-current-time-mock)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -388,8 +389,6 @@ Essentially, each animation is an event that occurs over a duration, and we can 
 
 So, we need a function that handles single frame motion, and based on it, we will build the entire animation
 
-Let's define it, call it in the `smoothScrollTo()` as a draft, and pass `startScrollTime` and `scrollDuration` to it:
-
 ```js
 function smoothScrollTo({
   scrollTargetElem,
@@ -430,18 +429,14 @@ function animateSingleScrollFrame({
   }) {}
 ```
 
-### Current Time Mock
+### Set the current time mock
 
 For each frame, we want to check how much time has already been spent on the animation. We have a `startScrollTime` value and now need to know the current time to calculate the elapsed time
 
 Technically, we would obtain a `currentTime` timestamp from `requestAnimationFrame()`, but we haven't implemented it yet. We will do so later. For now, we'll mock this value:
 
 ```js
-function animateSingleScrollFrame({startScrollTime, scrollDuration }) {
-  // The '100' here is a magic number, used for mock purposes only, 
-  // and will be removed upon the implementation of requestAnimationFrame()
-  const currentTime = performance.now() + 100;
-}
+const currentTime = performance.now() + 100;
 ```
 
 ### Elapsed Time
