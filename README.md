@@ -12,6 +12,7 @@
   * [Get the scroll start position](#get-the-scroll-start-position)
   * [Get the scroll end position](#get-the-scroll-end-position)
   * [Get the scroll start timestamp](#get-the-scroll-start-timestamp)
+* [Function `animateSingleScrollFrame()` gives the progress of the animation](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -379,7 +380,7 @@ function smoothScrollTo({
 }
 ```
 
-## Animation per frame function
+## Function `animateSingleScrollFrame()` gives the progress of the animation ([Table of Contents](#contents))
 
 Essentially, each animation is an event that occurs over a duration, and we can break down this time-based event into separate frames. Something like this
 
@@ -394,17 +395,39 @@ function smoothScrollTo({
   scrollTargetElem,
   scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME
 }) {
-  // ... previous stuff
+  if (!scrollTargetElem) {
+    return;
+  }
+  
+  const scrollStartPositionY = Math.round(window.scrollY);
+  
+  const targetPositionYRelativeToViewport = Math.round(
+    scrollTargetElem.getBoundingClientRect().top
+  );
+  
+  const targetPositionY = targetPositionYRelativeToViewport + scrollStartPositionY;
   
   const startScrollTime = performance.now();
-  
-  animateSingleScrollFrame({
+ 
+  // here, we collect all the necessary information for the future playback 
+  // of our animation into a single animationFrameSettings object
+  const animationFrameSettings = {
     startScrollTime,
-    scrollDuration
-  })
+    scrollDuration,
+    scrollStartPositionY,
+    targetPositionY,
+  };
+  
+  // and we pass this object into animateSingleScrollFrame() function
+  animateSingleScrollFrame(animationFrameSettings)
 }
 
-function animateSingleScrollFrame({startScrollTime, scrollDuration }) {}
+function animateSingleScrollFrame({
+    startScrollTime,
+    scrollDuration,
+    scrollStartPositionY,
+    targetPositionY,
+  }) {}
 ```
 
 ### Current Time Mock
