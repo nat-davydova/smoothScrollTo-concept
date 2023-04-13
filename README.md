@@ -5,6 +5,7 @@
 * [Demo](#demo-table-of-contents) 
 * [Prerequisites](#prerequisites-table-of-contents)
 * [Basic layout](#basic-layout-table-of-contents)
+* [Adding event listener to the navigation](#adding-event-listener-to-the-navigation-table-of-contents)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -95,9 +96,11 @@ section:nth-of-type(2n) {
 ```
 </details>
 
-## Event Listener
+## Adding event listener to the navigation ([Table of Contents](#contents))
 
-First, we need to grab the navigation element to add an event listener to it. We should not apply listeners directly to links in the navigation, as it's a bad practice (refer to the event delegation JS pattern)
+First, we need to grab the navigation element to add an event listener to it. We should not apply listeners directly to links in the navigation, as it's a bad practice (refer to the event delegation JS pattern).
+
+Next, we should add an event listener to the navigation and prevent the default behavior of clicked link targets within it.
 
 ```js
 // I prefer to store all the DOM selector strings into a single object
@@ -107,29 +110,19 @@ const DOM = {
 };
 
 const navigation = document.querySelector(`.${DOM.nav}`);
-```
-Next, we add an event listener to the navigation and prevent the default behavior of clicked link targets within it:
 
-``` js
 // we can't be sure that navigation element exists, so we need optional chaining
-navigation?.addEventListener("click", (e) => {
-  e.preventDefault();
-
-});
-```
-
-Here, we implement the event delegation pattern: we check if the element is a navigation link or if it is a descendant of one. If it's not, we exit the function and do nothing
-
-```js
 navigation?.addEventListener("click", (e) => {
   e.preventDefault();
 
   const currentTarget = e.target;
 
-  // we interested in a link we actually click
+  // Here, we implement the event delegation pattern: we check if the element is a navigation link or if it is a descendant of one. 
+  // If it is a navigation link or a descendant of one, the navigation link element will be stored in currentLink
+  // If not, null will be stored in the currentLink
   const currentLink = currentTarget.closest(`.${DOM.navLink}`);
-  
-  // all the magic will be here on link click
+
+  // ... more stuff will be there later
 });
 ```
 
@@ -163,6 +156,7 @@ So, we can pass it as an argument when `getScrollTargetElem` is called inside th
 
 ```js
 function getScrollTargetElem(clickedLinkElem) {
+  
   if (!clickedLinkElem) {
     return null;
   }
