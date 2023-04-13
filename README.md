@@ -16,6 +16,7 @@
   * [Set the current time mock](#set-the-current-time-mock)
   * [Calc the elapsed time](#calc-the-elapsed-time)
   * [Get the absolute animation progress](#get-the-absolute-animation-progress)
+  * [Get the animation progress normalization by Bezier Curve](#get-the-animation-progress-normalization-by-bezier-curve)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -460,11 +461,9 @@ It will be updated on each Event Loop tick. We use `Math.min()` here because in 
 const absoluteAnimationProgress = Math.min(elapsedTime / scrollDuration, 1);
 ```
 
-### Animation Progress normalization by Bezier Curve
+### Get the animation progress normalization by Bezier Curve
 
-#### Animation Easings
-
-If you want a simple linear animation, you can skip this step. However, we often prefer non-linear animations that are a bit more intricate, featuring nice easing effects, such as starting slow, speeding up, and then slowing down again towards the end.
+Now we have a linear animation progress. However, we often prefer non-linear animations that are a bit more intricate, featuring nice easing effects, such as starting slow, speeding up, and then slowing down again towards the end.
 
 You can explore the most popular animation easing types based on Bezier Curves at [easings.net](https://easings.net/#). I've chosen the [easeInOutQuad](https://easings.net/#easeInOutQuad) mode for this project. On this page, you can find a function that calculates this easing effect:
 
@@ -480,13 +479,20 @@ This easing function takes the absolute animation progress, ranging between 0 an
 
 If our animation progress is less than `50%`, it will increase this progress, so the animation starts slowly and then speeds up. If the progress is more than `50%`, the animation will smoothly slow down.
 
-#### Animation Progress Normalization
-
 Let's create a wrapper function that takes `animationProgress` as a parameter and returns normalized progress from `easeInOutQuadProgress()`. I'm adding this extra function because later, we may want to handle more than just a single easing mode
 
-```js 
-function animateSingleScrollFrame({startScrollTime, scrollDuration }) {
-  // ... previous stuff
+```js
+function animateSingleScrollFrame({
+  startScrollTime,
+  scrollDuration,
+  scrollStartPositionY,
+  targetPositionY,
+}) {
+  const currentTime = performance.now() + 100;
+ 
+  const elapsedTime = currentTime - startScrollTime;
+ 
+  const absoluteAnimationProgress = Math.min(elapsedTime / scrollDuration, 1);
   
   const normalizedAnimationProgress = normalizeAnimationProgressByBezierCurve(
     absoluteAnimationProgress
@@ -495,6 +501,12 @@ function animateSingleScrollFrame({startScrollTime, scrollDuration }) {
 
 function normalizeAnimationProgressByBezierCurve(animationProgress: number) {
   return easeInOutQuadProgress(animationProgress);
+}
+
+function easeInOutQuadProgress(animationProgress: number) {
+  return animationProgress < 0.5
+    ? 2 * animationProgress * animationProgress
+    : -1 + (4 - 2 * animationProgress) * animationProgress;
 }
 ```
 
