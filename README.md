@@ -25,7 +25,7 @@
   * [Finish creating animation with recursive `requestAnimationFrame()`](#finish-creating-animation-with-recursive-requestanimationframe)
 * [The last thing: a callback on an animation end](#the-last-thing-a-callback-on-an-animation-end-table-of-contents)   
 * [A final word](#a-final-word-table-of-contents)
- 
+
 ## Main idea ([Table of Contents](#contents))
 
 I'm implementing my own vanilla JS alternative to the browser's `scroll-behavior: smooth` feature here. It's useful for cases when you need to combine this functionality with complex scroll JS behavior.
@@ -788,3 +788,7 @@ We've built a fully complete Smooth Scroll concept. You can use it in your proje
 Let me remind you that you can watch [Full Demo on Codepen](https://codepen.io/nat-davydova/full/QWZwOdb/5db409195086b5b1631055fbcb6c94e5)
 
 I would be really glad to receive your feedback!
+
+My social links: [github](https://github.com/nat-davydova), [codepen](https://codepen.io/nat-davydova/), [twitter](https://twitter.com/nat_davydova_en) 
+
+I co-authored this article and developed the project alongside Dmitry Barabanov: [github](https://github.com/xfides), [twitter (ru-lang)](https://twitter.com/xfides), [youtube (ru-lang)](https://www.youtube.com/@InSimpleWords_WebDev). 
