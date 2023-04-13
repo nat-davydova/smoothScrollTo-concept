@@ -789,6 +789,6 @@ Let me remind you that you can watch [Full Demo on Codepen](https://codepen.io/n
 
 I would be really glad to receive your feedback!
 
-My social links: [github](https://github.com/nat-davydova), [codepen](https://codepen.io/nat-davydova/), [twitter](https://twitter.com/nat_davydova_en) 
+My social links: [codepen](https://codepen.io/nat-davydova/), [twitter](https://twitter.com/nat_davydova_en) 
 
 I co-authored this article and developed the project alongside Dmitry Barabanov: [github](https://github.com/xfides), [twitter (ru-lang)](https://twitter.com/xfides), [youtube (ru-lang)](https://www.youtube.com/@InSimpleWords_WebDev). 
