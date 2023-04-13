@@ -340,6 +340,21 @@ Check the schemes below.
 
 <img width="1378" alt="image" src="https://user-images.githubusercontent.com/52240221/231742620-0bc153fa-b5a7-4f17-9d3c-37cc19dd8218.png">
 
+### Get the scroll start timestamp
+
+We calculated the start and end position of the scroll. However, this is not enough to implement our plan. Animation is a change of some parameter in time. Therefore, we also need to get the start time of the animation, relative to which `scrollDuration` will tick.
+
+There are 2 options to get a 'now'-timestamp:
+* `Date.now()`
+* `performance.now()`
+
+Both of them return a timestamp, but `performance.now()` is a highly-resolution one, much more precise. It's important to understand that the time used in the browser's internal scheduler is more important to animation than the number of scrolled pixels on the screen. Therefore, here we will not round the values, as in the case of pixels above. We should use this origin one to make the animation smooth and precise too.
+
+
+```js
+const startScrollTime = performance.now();
+```
+
 So now `smoothScrollTo()` function looks like that:
 
 ```js
@@ -358,25 +373,6 @@ function smoothScrollTo({
   );
   
   const targetPositionY = targetPositionYRelativeToViewport + scrollStartPositionY;
-}
-```
-
-### Get the scroll start timestamp
-
-We need this value for animation settings which would be discussed later. 
-
-There are 2 options to get a 'now'-timestamp:
-* `Date.now()`
-* `performance.now()`
-
-Both of them return a timestamp, but `performance.now()` is a highly-resolution one, much more precise. So we should use this one to make the animation smooth and precise too.
-
-```js
-function smoothScrollTo({
-  scrollTargetElem,
-  scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME
-}) {
-  // ... previous stuff
   
   const startScrollTime = performance.now();
 }
