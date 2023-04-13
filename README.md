@@ -14,9 +14,10 @@
   * [Get the scroll start timestamp](#get-the-scroll-start-timestamp)
 * [Function `animateSingleScrollFrame()` gives the progress of the animation](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents)
   * [Set the current time mock](#set-the-current-time-mock)
-  * [Calc the elapsed time](#calc-the-elapsed-time)
+  * [Calculate the elapsed time](#calculate-the-elapsed-time)
   * [Get the absolute animation progress](#get-the-absolute-animation-progress)
   * [Get the animation progress normalization by Bezier Curve](#get-the-animation-progress-normalization-by-bezier-curve)
+  * [Calculate scroll length per frame](#calculate-scroll-length-per-frame)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -442,7 +443,7 @@ Technically, we would obtain a `currentTime` timestamp from `requestAnimationFra
 const currentTime = performance.now() + 100;
 ```
 
-### Calc the elapsed time
+### Calculate the elapsed time
 
 The elapsed time will be used to calculate the animation progress. When we implement `requestAnimationFrame()`, `currentTime` (and therefore, `elapsedTime`) will be updated on each Event Loop tick.
 
@@ -510,55 +511,16 @@ function easeInOutQuadProgress(animationProgress: number) {
 }
 ```
 
-### Scroll length per frame
+### Calculate scroll length per frame
 
 The next step is to calculate how many pixels we should scroll during this animation frame, based on normalized animation progress and two coordinates: start position and target position. 
 
-We've already calculated the start position and target position in the `smoothScrollTo()` function, so now we should pass them to the `animateSingleScrollFrame()` function:
+We've already calculated the start position and target position in the [`smoothScrollTo()`](#function-smoothscrollto-and-its-basic-variables-table-of-contents) function. We've even collected all the necessary information for the animation in a single object `animationFrameSettings`, which we pass to the [`animateSingleScrollFrame()`](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents) function. Let's use this information.
+
+This dimension is absolute; we should know the length of the scroll path from the very start to the current frame point. The sign indicates the direction (whether we scroll up or down)
 
 ```js
-function smoothScrollTo({
-  scrollTargetElem,
-  scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME,
-}) {
-  if (!scrollTargetElem) {
-    return;
-  }
-
-  const scrollStartPositionY = Math.round(window.scrollY);
-
-  const targetPositionYRelativeToViewport = Math.round(
-    scrollTargetElem.getBoundingClientRect().top
-  );
-
-  const targetPositionY =
-    targetPositionYRelativeToViewport + scrollStartPositionY;
-
-  const startScrollTime = performance.now();
-
-  animateSingleScrollFrame({
-    startScrollTime,
-    scrollDuration,
-    scrollStartPositionY,
-    targetPositionY,
-  });
-}
-```
-
-This dimension is absolute; we should know the length of the scroll path from the very start to the current frame point. The sign is for direction (we scroll up or down):
-
-```js
-function animateSingleScrollFrame({
-    startScrollTime,
-    scrollDuration,
-    scrollStartPositionY,
-    targetPositionY,
-  }) {
-  // ... previous stuff
-  
-  const currentScrollLength =
-    (targetPositionY - scrollStartPositionY) * normalizedAnimationProgress;
-}
+const currentScrollLength = (targetPositionY - scrollStartPositionY) * normalizedAnimationProgress;
 ```
 
 #### Example #1
