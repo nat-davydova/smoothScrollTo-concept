@@ -15,6 +15,7 @@
 * [Function `animateSingleScrollFrame()` gives the progress of the animation](#function-animatesinglescrollframe-gives-the-progress-of-the-animation-table-of-contents)
   * [Set the current time mock](#set-the-current-time-mock)
   * [Calc the elapsed time](#calc-the-elapsed-time)
+  * [Get the absolute animation progress](#get-the-absolute-animation-progress)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -449,19 +450,14 @@ The elapsed time will be used to calculate the animation progress. When we imple
 const elapsedTime = currentTime - startScrollTime;
 ```
 
-### Animation Progress
+### Get the absolute animation progress
 
-The animation progress, which we calculate with the help of ёelapsedTimeё, shows how much of the animation is completed. We need an absolute progress ranging from 0 (beginning of the animation) to 1 (end of animation). This will help us calculate the scroll length in pixels per current frame later on
+The animation progress, which we calculate with the help of `elapsedTime`, shows how much of the animation is completed. We need an absolute progress ranging from 0 (beginning of the animation) to 1 (end of animation). This will help us calculate the scroll length in pixels per current frame later on.
 
-It will be updated on each Event Loop tick.
+It will be updated on each Event Loop tick. We use `Math.min()` here because in real life a frame can be calculated in time that is already longer than the given `scrollDuration`. However, the animation progress end position must not exceed 1.
 
 ```js
-function animateSingleScrollFrame({startScrollTime, scrollDuration }) {
-  // ... previous stuff
-  
-  // If the progress exceeds 100% due to some browser lag, we'll stop at 1 and avoid errors here
-  const absoluteAnimationProgress = Math.min(elapsedTime / scrollDuration, 1);
-}
+const absoluteAnimationProgress = Math.min(elapsedTime / scrollDuration, 1);
 ```
 
 ### Animation Progress normalization by Bezier Curve
