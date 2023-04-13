@@ -7,6 +7,7 @@
 * [Basic layout](#basic-layout-table-of-contents)
 * [Adding event listener to the navigation](#adding-event-listener-to-the-navigation-table-of-contents)
 * [Function `getScrollTargetElem()` get target to which it needs to scroll](#function-getscrolltargetelem-get-target-to-which-it-needs-to-scroll-table-of-contents)
+  * [Obtain and validate link `href` value](#obtain-and-validate-link-href-value)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -207,14 +208,24 @@ I've preferred the 2nd way, it's simplier than any RegEx solution:
 
 ```js
 function getScrollTargetElem(clickedLinkElem) {
-  // ... previous stuff
+  if (!clickedLinkElem) {
+    return null;
+  }
+
+  const clickedLinkElemHref = clickedLinkElem.getAttribute("href");
+
+  if (!clickedLinkElemHref) {
+    return null;
+  }
   
   let scrollTarget;
   
+  // here we check if there is any Error thrown
   try {
     scrollTarget = document.querySelector(clickedLinkElemHref);
   } catch (e) {
     console.log(e);
+    // if there is an error we can't perform scroll therefore return null
     return null;
   }
 
