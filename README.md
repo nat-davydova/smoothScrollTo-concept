@@ -8,6 +8,7 @@
 * [Adding event listener to the navigation](#adding-event-listener-to-the-navigation-table-of-contents)
 * [Function `getScrollTargetElem()` get target to which it needs to scroll](#function-getscrolltargetelem-get-target-to-which-it-needs-to-scroll-table-of-contents)
   * [Obtain and validate link `href` value](#obtain-and-validate-link-href-value)
+* [Function `smoothScrollTo()` and it's basic variables](#function-smoothscrollto-and-its-basic-variables-table-of-contents)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -233,11 +234,17 @@ function getScrollTargetElem(clickedLinkElem) {
 }
 ```
 
-## smoothScrollTo() function and it's basic variables
+## Function `smoothScrollTo()` and it's basic variables ([Table of Contents](#contents))
 
-The actual function that performs all the magic is a function that smoothly scrolls to the target. We call it in the event handler after target definition, as it should know the point to which it should actually scroll
+The actual function that performs all the magic is a function that smoothly scrolls to the target. We call it in the event handler after target definition, as it should know the point to which it should actually scroll.
+
+The crucial thing we need to know is how long our animation should last. In our case, the user should be able to set it directly as a ` smoothScrollTo` parameter. Additionally, we will define a default value in case the user doesn't want to set any.
 
 ```js
+// ... get navigation ...
+
+const DEFAULT_SCROLL_ANIMATION_TIME = 500;
+
 navigation?.addEventListener("click", (e) => {
   // ... previous stuff
 
@@ -245,35 +252,24 @@ navigation?.addEventListener("click", (e) => {
   // and we handle what to do in both cases within the smoothScrollTo() function
   const scrollTargetElem = getScrollTargetElem(currentLink);
 
-  smoothScrollTo(scrollTargetElem);
-});
-
-function smoothScrollTo(scrollTargetElem) {
-  if (!scrollTarget) {
-    return;
-  }
-}
-```
-
-### Scroll Duration
-
-The crucial thing we need to know is how long our animation should last. In our case, the user should be able to set it directly as a ` smoothScrollTo` parameter. Additionally, we will define a default value in case the user doesn't want to set any.
-
-```js
-const DEFAULT_SCROLL_ANIMATION_TIME = 500;
-
-navigation?.addEventListener("click", (e) => {
-  // ... previous stuff
 
   // the user can set any time in milliseconds here
   // I've also packed the arguments into objects for more convenient handling
-  smoothScrollTo({scrollTargetElem, scrollDuration: some_time_in_ms});
+  smoothScrollTo({
+   scrollTargetElem, 
+   scrollDuration: some_time_in_ms || default value
+  });
 });
 
 function smoothScrollTo({
   scrollTargetElem,
   scrollDuration = DEFAULT_SCROLL_ANIMATION_TIME
-}) {}
+}) {
+  // if there is no scroll target we can't perform any scroll and just return here
+  if (!scrollTarget) {
+    return;
+  }
+}
 ```
 
 ### Get actual user Y-coordinate
