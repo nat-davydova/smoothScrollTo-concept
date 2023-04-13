@@ -325,15 +325,15 @@ Check the schemes below.
 
 ##### Example #1
 
-<img width="1346" alt="image" src="https://user-images.githubusercontent.com/52240221/231485935-a22095a4-a281-47c5-9047-d25948bdf241.png">
+<img width="1363" alt="image" src="https://user-images.githubusercontent.com/52240221/231742185-e5afaf0b-509d-4c76-a533-89736e71d1c0.png">
 
 ##### Example #2
 
-<img width="1148" alt="Снимок экрана 2023-04-06 003707" src="https://user-images.githubusercontent.com/52240221/230217606-ad0f60f9-a418-4f1a-9da4-c01d53f0cc85.png">
+<img width="1372" alt="image" src="https://user-images.githubusercontent.com/52240221/231742417-f2240a7c-5af8-4150-ad81-4e8ac5b59184.png">
 
 ##### Example #3
 
-<img width="1147" alt="Снимок экрана 2023-04-06 004127" src="https://user-images.githubusercontent.com/52240221/230218478-cf973bf2-d066-475c-ba67-03447e0fc689.png">
+<img width="1378" alt="image" src="https://user-images.githubusercontent.com/52240221/231742620-0bc153fa-b5a7-4f17-9d3c-37cc19dd8218.png">
 
 So now `smoothScrollTo()` function looks like that:
 
