@@ -6,6 +6,7 @@
 * [Prerequisites](#prerequisites-table-of-contents)
 * [Basic layout](#basic-layout-table-of-contents)
 * [Adding event listener to the navigation](#adding-event-listener-to-the-navigation-table-of-contents)
+* [Function `getScrollTargetElem()` get target to which it needs to scroll](#function-getscrolltargetelem-get-target-to-which-it-needs-to-scroll-table-of-contents)
 
 ## Main idea ([Table of Contents](#contents))
 
@@ -117,7 +118,7 @@ navigation?.addEventListener("click", (e) => {
 
   const currentTarget = e.target;
 
-  // Here, we implement the event delegation pattern: we check if the element is a navigation link or if it is a descendant of one. 
+  // Here, we implement the event delegation pattern: we check if the element is a navigation link or if it is a descendant of one
   // If it is a navigation link or a descendant of one, the navigation link element will be stored in currentLink
   // If not, null will be stored in the currentLink
   const currentLink = currentTarget.closest(`.${DOM.navLink}`);
@@ -126,21 +127,33 @@ navigation?.addEventListener("click", (e) => {
 });
 ```
 
-## Get scrollTo target
+## Function `getScrollTargetElem()` get target to which it needs to scroll ([Table of Contents](#contents))
 
-The purpose of the smoothScrollTo() function is to scroll to a specific element on the page. Therefore, we need to determine the target of our scroll somehow. Let's create a function that will do this
+The purpose of the [`smoothScrollTo()`](#function-smoothscrollto-and-its-basic-variables-table-of-contents) function is to scroll to a specific element on the page. Therefore, we need to determine the target of our scroll somehow. Let's create a function `getScrollTargetElem()` that will do this.
 
-```js
-function getScrollTargetElem() {}
-```
-
-What should it do:
+What should the `getScrollTargetElem()` function do:
 
 * get the link we've clicked;
 * obtain the value of the href attribute, which can be the actual ID of the element we want to scroll to or can be an external link or simply a plain text;
 * verify if it's a valid value to grab the element by:
   * if not, return null (clearly, we have no element);
   * if yes, grab the target element and return it;
+
+We call it into the event listener and pass the stored link element (or null) into it:
+
+```js
+navigation?.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const currentTarget = e.target;
+
+  const currentLink = currentTarget.closest(`.${DOM.navLink}`);
+
+  const scrollTargetElem = getScrollTargetElem(currentLink);
+});
+
+function getScrollTargetElem(clickedLinkElem) {}
+```
 
 ### Get the clicked link
 
