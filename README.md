@@ -11,6 +11,7 @@
 * [Function `smoothScrollTo()` and it's basic variables](#function-smoothscrollto-and-its-basic-variables-table-of-contents)
   * [Get the scroll start position](#get-the-scroll-start-position)
   * [Get the scroll end position](#get-the-scroll-end-position)
+  * [Get the scroll start timestamp](#get-the-scroll-start-timestamp)
 
 ## Main idea ([Table of Contents](#contents))
 
