@@ -19,6 +19,10 @@
   * [Get the animation progress normalization by Bezier Curve](#get-the-animation-progress-normalization-by-bezier-curve)
   * [Calculate scroll length per frame](#calculate-scroll-length-per-frame)
   * [Calculate new position Y-coordinate](#calculate-new-position-y-coordinate)
+* [Separate Frames -> Animation](#separate-frames---animation-table-of-contents)
+  * [Use `requestAnimationFrame()` to start the browser animation](#use-requestanimationframe-to-start-the-browser-animation)
+  * [️⚠️ A Pitfall with `requestAnimationFrame()` and recursion](#a-pitfall-with-requestanimationframe-and-recursion)
+  * [Finish creating animation with recursive `requestAnimationFrame()`](#finish-creating-animation-with-recursive-requestanimationframe)
  
 ## Main idea ([Table of Contents](#contents))
 
@@ -568,6 +572,8 @@ function animateSingleScrollFrame({
   const normalizedAnimationProgress = normalizeAnimationProgressByBezierCurve(
     absoluteAnimationProgress
   );
+  
+  const currentScrollLength = (targetPositionY - scrollStartPositionY) * normalizedAnimationProgress;
     
   const newPositionY = scrollStartPositionY + currentScrollLength;
   
@@ -581,23 +587,19 @@ In the video, you can see the difference in scroll length based on the dimension
 
 [Untitled_ Apr 13, 2023 2_35 PM.webm](https://user-images.githubusercontent.com/52240221/231746886-18d64d3b-a626-4c2e-bc9a-452ae82b0d09.webm)
 
-## Separate Frames -> Animation
+## Separate Frames -> Animation ([Table of Contents](#contents))
 
 We have a function that handles a single frame, but an animation is a sequence of frames, and we need to call this function repeatedly until `the scrollDuration` is finished and the time is up to complete the animation.
 
 The recursive `requestAnimationFrame()` will help us here. Fortunately, it's not as complicated as it might seem.
 
-### What is `requestAnimationFrame()`?
+[`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) (aka RAF) is a function that takes a callback with some animation as an argument, and then on each Event Loop tick, it nudges the browser to call this callback right before the repaint stage. 1 Event Loop tick -> 1 frame -> 1 `requestAnimationFrame()`. That's why we need to call it repeatedly until the animation is completed.
 
-`requestAnimationFrame()` (aka RAF) is a function that takes a callback with some animation as an argument, and then on each Event Loop tick, it nudges the browser to call this callback right before the repaint stage. 1 Event Loop tick -> 1 frame -> 1 `requestAnimationFrame()`. That's why we need to call it repeatedly until the animation is completed.
-
-### Add a recursion into our code
+### Use `requestAnimationFrame()` to start the browser animation
 
 Each recursion is based on 2 main points:
 * a place for the first function call;
 * a condition, in which if it is `true` we call the function again and again, and if it is `false` we stop the recursive function calls;
-
-#### A place for the first function call
 
 The first function call will be inside the `smoothScrollTo()` function as a starting animation point.
 
@@ -613,17 +615,15 @@ function smoothScrollTo({
 }
 ```
 
-#### ⚠️ A Pitfall
+### A Pitfall with `requestAnimationFrame()` and recursion 
 
-By design, `requestAnimationFrame()` passes a `currentTime` timestamp as an argument to the callback. Do you remember when we mocked the `currentTime` earlier? We can't simply call RAF like this:
+⚠️ By design, `requestAnimationFrame()` passes a `currentTime` timestamp as an argument to the callback. Do you remember when we mocked the `currentTime` earlier? We can't simply call RAF like this:
 
 ```js
 requestAnimationFrame(animateSingleScrollFrame) 
 ```
 
-... because the `animateSingleScrollFrame()` function should accept not only the currentTime argument, but also an object with the animation settings we've passed in it earlier.
-
-We need to use an arrow function here:
+... because the `animateSingleScrollFrame()` function should accept not only the currentTime argument, but also an object with the animation settings we've passed in it earlier. We should use an arrow function to deal with the obstacle:
 
 ```js
 function smoothScrollTo({
@@ -632,34 +632,26 @@ function smoothScrollTo({
 }) {
   // ... previous stuff
 
-  // all the things we've passed into `animateSingleScrollFrame` earlier
+  // all animation info we pass into `animateSingleScrollFrame()`
   const animationFrameSettings = {
     startScrollTime,
     scrollDuration,
     scrollStartPositionY,
-    targetPositionY
+    targetPositionY,
+    onAnimationEnd
   };
   
-  // an actual RAF call
+  // an actual RAF call for continuous animation
   requestAnimationFrame((currentTime) =>
     animateSingleScrollFrame(animationFrameSettings, currentTime)
   );
-```
-
-```js
-function animateSingleScrollFrame(
-  {
-    startScrollTime,
-    scrollDuration,
-    scrollStartPositionY,
-    targetPositionY,
-  },
-  currentTime: number
-) {
-  // ... a function inner content
 }
+
+function animateSingleScrollFrame(
+  animationFrameSettings, currentTime
+) { /* ... */ }
 ```
-#### Add a recursion repeating condition
+### Finish creating animation with recursive `requestAnimationFrame()`
 
 This is a pretty straightforward thing. If our duration time is greater than the elapsed time, we have time for a new animation frame, so we should continue the recursive RAF:
 
